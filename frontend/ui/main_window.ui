@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ClearlyHubDialogBase</class>
+ <widget class="QDialog" name="ClearlyHubDialogBase">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>960</width>
+    <height>700</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>960</width>
+    <height>700</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Clearly.Hub</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QWidget" name="topBarWidget" native="true">
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>75</height>
+      </size>
+     </property>
+     <layout class="QHBoxLayout" name="topBarLayout">
+      <item>
+             <widget class="QLabel" name="logoLabel">
+                <property name="minimumSize">
+                 <size>
+                <width>56</width>
+                <height>56</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                <width>56</width>
+                <height>56</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+             </widget>
+            </item>
+            <item>
+       <widget class="QWidget" name="userInfoWidget" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>200</width>
+          <height>100</height>
+         </size>
+        </property>
+        <layout class="QVBoxLayout" name="userInfoLayout">
+         <item>
+          <widget class="QLabel" name="usernameLabel">
+           <property name="text">
+            <string>Name: N/A</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="emailLabel">
+           <property name="text">
+            <string>Email: N/A</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="loginButton">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Login</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="datasetsTab">
+      <attribute name="title">
+       <string>Datasets</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="datasetsTabLayout">
+       <item>
+        <widget class="QLabel" name="datasetsTitleLabel">
+         <property name="font">
+          <font>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Datasets</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="datasetsSearchLineEdit">
+         <property name="placeholderText">
+          <string>Search datasets...</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="datasetsRowLayout">
+         <property name="spacing">
+          <number>12</number>
+         </property>
+         <item>
+          <widget class="QFrame" name="datasetsFiltersSidebarFrame">
+           <property name="minimumSize">
+            <size>
+             <width>240</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>340</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::Shape::StyledPanel</enum>
+           </property>
+           <layout class="QVBoxLayout" name="datasetsFiltersSidebarLayout">
+            <item>
+             <widget class="QLabel" name="datasetsFiltersTitleLabel">
+              <property name="font">
+               <font>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>Filters</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="datasetsOwnerHubFiltersToggleButton">
+              <property name="text">
+               <string>Owner hubs</string>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+              <property name="toolButtonStyle">
+               <enum>Qt::ToolButtonStyle::ToolButtonTextBesideIcon</enum>
+              </property>
+              <property name="arrowType">
+               <enum>Qt::ArrowType::DownArrow</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QListWidget" name="datasetsOwnerHubFiltersList"/>
+            </item>
+            <item>
+             <widget class="QToolButton" name="datasetsTagsFiltersToggleButton">
+              <property name="text">
+               <string>Tags</string>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+              <property name="toolButtonStyle">
+               <enum>Qt::ToolButtonStyle::ToolButtonTextBesideIcon</enum>
+              </property>
+              <property name="arrowType">
+               <enum>Qt::ArrowType::DownArrow</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QListWidget" name="datasetsTagsFiltersList"/>
+            </item>
+            <item>
+             <widget class="QToolButton" name="datasetsFindabilityFiltersToggleButton">
+              <property name="text">
+               <string>Findability</string>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+              <property name="toolButtonStyle">
+               <enum>Qt::ToolButtonStyle::ToolButtonTextBesideIcon</enum>
+              </property>
+              <property name="arrowType">
+               <enum>Qt::ArrowType::DownArrow</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QListWidget" name="datasetsFindabilityFiltersList"/>
+            </item>
+            <item>
+             <widget class="QToolButton" name="datasetsFormatFiltersToggleButton">
+              <property name="text">
+               <string>Formats</string>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+              <property name="toolButtonStyle">
+               <enum>Qt::ToolButtonStyle::ToolButtonTextBesideIcon</enum>
+              </property>
+              <property name="arrowType">
+               <enum>Qt::ArrowType::DownArrow</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QListWidget" name="datasetsFormatFiltersList"/>
+            </item>
+            <item>
+             <widget class="QPushButton" name="datasetsClearFiltersButton">
+              <property name="text">
+               <string>Clear filters</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="datasetsFiltersBottomSpacer">
+              <property name="orientation">
+               <enum>Qt::Orientation::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QScrollArea" name="datasetsScrollArea">
+           <property name="widgetResizable">
+            <bool>true</bool>
+           </property>
+           <widget class="QWidget" name="datasetsScrollAreaContents">
+            <property name="geometry">
+             <rect>
+              <x>0</x>
+              <y>0</y>
+              <width>560</width>
+              <height>494</height>
+             </rect>
+            </property>
+            <layout class="QVBoxLayout" name="datasetsCardsLayout"/>
+           </widget>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="digitalTwinsTab">
+      <attribute name="title">
+       <string>Digital Twins</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="digitalTwinsTabLayout">
+       <item>
+        <widget class="QLabel" name="digitalTwinsTitleLabel">
+         <property name="font">
+          <font>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Digital Twins</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="digitalTwinsSearchLineEdit">
+         <property name="placeholderText">
+          <string>Search digital twins...</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="digitalTwinsRowLayout">
+         <property name="spacing">
+          <number>12</number>
+         </property>
+         <item>
+          <widget class="QFrame" name="digitalTwinsFiltersSidebarFrame">
+           <property name="minimumSize">
+            <size>
+             <width>240</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>340</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::Shape::StyledPanel</enum>
+           </property>
+           <layout class="QVBoxLayout" name="digitalTwinsFiltersSidebarLayout">
+            <item>
+             <widget class="QLabel" name="digitalTwinsFiltersTitleLabel">
+              <property name="font">
+               <font>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>Filters</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="digitalTwinsOwnerHubFiltersToggleButton">
+              <property name="text">
+               <string>Owner hub</string>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+              <property name="toolButtonStyle">
+               <enum>Qt::ToolButtonStyle::ToolButtonTextBesideIcon</enum>
+              </property>
+              <property name="arrowType">
+               <enum>Qt::ArrowType::DownArrow</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QListWidget" name="digitalTwinsOwnerHubFiltersList"/>
+            </item>
+            <item>
+             <widget class="QToolButton" name="digitalTwinsFindabilityFiltersToggleButton">
+              <property name="text">
+               <string>Findability</string>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+              <property name="toolButtonStyle">
+               <enum>Qt::ToolButtonStyle::ToolButtonTextBesideIcon</enum>
+              </property>
+              <property name="arrowType">
+               <enum>Qt::ArrowType::DownArrow</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QListWidget" name="digitalTwinsFindabilityFiltersList"/>
+            </item>
+            <item>
+             <widget class="QPushButton" name="digitalTwinsClearFiltersButton">
+              <property name="text">
+               <string>Clear filters</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="digitalTwinsFiltersBottomSpacer">
+              <property name="orientation">
+               <enum>Qt::Orientation::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QScrollArea" name="digitalTwinsScrollArea">
+           <property name="widgetResizable">
+            <bool>true</bool>
+           </property>
+           <widget class="QWidget" name="digitalTwinsScrollAreaContents">
+            <property name="geometry">
+             <rect>
+              <x>0</x>
+              <y>0</y>
+              <width>560</width>
+              <height>494</height>
+             </rect>
+            </property>
+            <layout class="QVBoxLayout" name="digitalTwinsCardsLayout"/>
+           </widget>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

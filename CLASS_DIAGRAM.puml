@@ -1,0 +1,69 @@
+@startuml ClearlyHub_Class_Diagram
+!theme plain
+hide members
+
+class ClearlyHub << QGIS plugin entry point >>
+class ClearlyHubDialog << main UI dialog >>
+class ClearlyHubController << orchestrates UI & tasks >>
+class DatasetsTab << datasets UI tab >>
+class DigitalTwinsTab << digital twins UI tab >>
+
+class DataFetchTask << async: fetch data >>
+class DigitalTwinLoadTask << async: load twin layers >>
+
+class Service << high-level API facade >>
+class AuthManager << OAuth2 / QGIS auth >>
+class AuthenticatedUser << current user & token >>
+
+class BaseManager << caching & error handling >>
+class DatasetManager << datasets operations >>
+class DigitalTwinManager << digital twin operations >>
+class HubManager << hub operations >>
+
+class Client << base HTTP client >>
+class DatasetsClient << datasets API >>
+class DigitalTwinsClient << digital twins API >>
+class HubsClient << hubs API >>
+class AuthClient << user info API >>
+
+class LayerLoader << adds layers to QGIS >>
+
+' UI
+ClearlyHub --> ClearlyHubDialog
+ClearlyHub --> ClearlyHubController
+ClearlyHubDialog --> DatasetsTab
+ClearlyHubDialog --> DigitalTwinsTab
+
+' Controller
+ClearlyHubController --> ClearlyHubDialog
+ClearlyHubController --> Service
+ClearlyHubController --> DataFetchTask
+ClearlyHubController --> DigitalTwinLoadTask
+
+' Tasks
+DataFetchTask --> Service
+DigitalTwinLoadTask --> Service
+
+' Service
+Service --> AuthManager
+Service --> AuthenticatedUser
+Service --> DatasetManager
+Service --> DigitalTwinManager
+Service --> HubManager
+Service --> LayerLoader
+
+' Managers
+DatasetManager --|> BaseManager
+DigitalTwinManager --|> BaseManager
+HubManager --|> BaseManager
+DatasetManager --> DatasetsClient
+DigitalTwinManager --> DigitalTwinsClient
+HubManager --> HubsClient
+
+' Clients
+DatasetsClient --|> Client
+DigitalTwinsClient --|> Client
+HubsClient --|> Client
+AuthClient --|> Client
+
+@enduml

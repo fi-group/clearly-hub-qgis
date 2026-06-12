@@ -1,0 +1,19 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <list>
+          <option value="boto3" />
+          <option value="botocore" />
+          <option value="cryptography" />
+          <option value="envs" />
+          <option value="jmespath" />
+          <option value="pycognito" />
+          <option value="PyJWT" />
+          <option value="s3transfer" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
