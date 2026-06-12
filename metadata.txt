@@ -12,7 +12,7 @@ version=1.0.0
 author=Future Insight
 email=support@futureinsight.nl
 
-about=Clearly.Hub plugin for QGIS
+about=Clearly.Hub plugin for QGIS: Seamless connection between Clearly.Hub and QGIS, access to public and protected data, browse through the data catalog and ind datasets and add them to your QGIS project!
 
 tracker=https://github.com/fi-group/clearly-hub-qgis/issues
 repository=https://github.com/fi-group/clearly-hub-qgis
