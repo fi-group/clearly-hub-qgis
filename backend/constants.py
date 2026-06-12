@@ -9,4 +9,4 @@ OAUTH_USERINFO_URL = "https://auth.clearly.app/oauth2/userInfo"
 REDIRECT_URL = "clearlyhub"
 
 # For hosted app / browser flow client id
-OAUTH_CLIENT_ID = "73cj2vgnvip3njsqrobr5i0fdj"
+OAUTH_CLIENT_ID = "7o1t1hekdkqj51n41n9t1n9o5j"
