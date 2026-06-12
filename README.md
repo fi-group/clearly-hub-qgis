@@ -14,13 +14,11 @@
 
 ## Overview
 
-This plugin was developed in the context of my internship for the company Future Insight. Future Insight is a small dutch company based in Zwolle with the objective of easily connecting data to apps through it's ecosystem - Clearly.Hub.
+The ClearlyHub plugin for QGIS allows users to connect to the Clearly.Hub data catalog and access both public and protected datasets. Users can browse through the catalog, find datasets of interest, and easily add them to their QGIS projects for analysis and visualization.
 
 ### Authors
 
-I am currently a third year computer science student at the Rotterdam University of Applied Sciences.
-- My GitHub: https://github.com/Telmo-Claro
-- Future Insight website: https://www.futureinsight.nl/
+- Future Insight: https://www.futureinsight.nl/
 
 ## Installation
 
@@ -36,7 +34,7 @@ On a Linux machine:
 
 On a Windows machine:
 
- C:\Users\USER\AppData\Roaming\QGIS\QGIS3\profiles\default\python\plugins
+C:\Users\USER\AppData\Roaming\QGIS\QGIS3\profiles\default\python\plugins
 
 ```
 Supported (tested) operating systems:
