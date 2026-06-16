@@ -8,7 +8,7 @@ name=ClearlyHub
 qgisMinimumVersion=3.44
 qgisMaximumVersion=4.99
 description=Clearly.Hub plugin for QGIS
-version=1.0.2
+version=1.0.3
 author=Future Insight
 email=support@futureinsight.nl
 
