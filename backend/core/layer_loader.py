@@ -28,7 +28,8 @@ def load_vector_layer(url: str, layer_name: str):
     return None
 
 
-def load_wfs_layer(url: str, layer_name: str, parse_base_func, get_typenames_func=None, user_token: str = None):
+def load_wfs_layer(url: str, layer_name: str, parse_base_func,
+                   get_typenames_func=None, user_token: str = None):
     """Load a WFS layer by discovering feature types from GetCapabilities.
 
     The resource URL is typically a GetCapabilities URL; the base endpoint is
@@ -63,7 +64,8 @@ def load_wfs_layer(url: str, layer_name: str, parse_base_func, get_typenames_fun
                 f"url={base_url}&service=WFS&typename={tn}&version=auto",
                 f"url={base_url}&service=WFS&typeName={tn}&version=auto",
             ):
-                layer = QgsVectorLayer(uri, f"{layer_name} – {typename}", "WFS")
+                layer = QgsVectorLayer(
+                    uri, f"{layer_name} – {typename}", "WFS")
                 if layer and layer.isValid():
                     return layer
 
@@ -72,7 +74,8 @@ def load_wfs_layer(url: str, layer_name: str, parse_base_func, get_typenames_fun
     return None
 
 
-def load_raster_layer(url: str, layer_name: str, fmt: str, user_token: str, get_wms_layers_func, parse_base_func):
+def load_raster_layer(url: str, layer_name: str, fmt: str,
+                      user_token: str, get_wms_layers_func, parse_base_func):
     """Load a raster layer for supported OGC raster services.
 
     Args:
@@ -164,12 +167,14 @@ def tiled_scene_urls(url: str):
     candidates = []
     lower = clean.lower()
     if "data.3dbag.nl" in lower and "/cesium3dtiles/" in lower:
-        candidates.append("https://www.nederlandin3d.nl/viewer/datasource-data/6eae57c4-e429-4285-a77c-1f6e2c2e8eae/tileset.json")
+        candidates.append(
+            "https://www.nederlandin3d.nl/viewer/datasource-data/6eae57c4-e429-4285-a77c-1f6e2c2e8eae/tileset.json")
     candidates.append(clean)
     return tuple(candidates)
 
 
-def try_tiled_scene(url: str, layer_name: str, providers=("cesiumtiles", "tiledscene")):
+def try_tiled_scene(url: str, layer_name: str,
+                    providers=("cesiumtiles", "tiledscene")):
     """Try loading a tiled scene with multiple providers and source forms.
 
     Args:
@@ -187,7 +192,8 @@ def try_tiled_scene(url: str, layer_name: str, providers=("cesiumtiles", "tileds
             for source in (f"url={scene_url}", scene_url):
                 layer = QgsTiledSceneLayer(source, layer_name, provider)
                 if layer and layer.isValid():
-                    print(f"Loaded 3D layer with provider '{provider}' and source '{source}'")
+                    print(
+                        f"Loaded 3D layer with provider '{provider}' and source '{source}'")
                     return layer
                 if layer and layer.dataProvider():
                     err = layer.dataProvider().error().message()
@@ -204,7 +210,8 @@ def load_3d_layer(url: str, layer_name: str):
 
 def load_terrain_layer(url: str, layer_name: str):
     """Load a quantized mesh terrain scene using compatible providers."""
-    return try_tiled_scene(url, layer_name, ("quantizedmesh", "cesiumtiles", "tiledscene"))
+    return try_tiled_scene(
+        url, layer_name, ("quantizedmesh", "cesiumtiles", "tiledscene"))
 
 
 def load_bim_layer(url: str, layer_name: str):
@@ -252,7 +259,8 @@ def load_point_cloud_layer(url: str, layer_name: str):
             for source in sources:
                 layer = QgsPointCloudLayer(source, layer_name, provider)
                 if layer and layer.isValid():
-                    print(f"Loaded point cloud with provider '{provider}' and source '{source}'")
+                    print(
+                        f"Loaded point cloud with provider '{provider}' and source '{source}'")
                     return layer
                 if layer and layer.dataProvider():
                     err = layer.dataProvider().error().message()

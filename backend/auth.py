@@ -15,6 +15,7 @@ from .constants import (
     REDIRECT_URL,
 )
 
+
 class AuthManager:
     """Manage QGIS OAuth2 auth configuration for ClearlyHub."""
 
@@ -133,7 +134,8 @@ class AuthManager:
             return None
 
         config = QgsAuthMethodConfig()
-        if not self.auth_manager.loadAuthenticationConfig(authcfg_id, config, True):
+        if not self.auth_manager.loadAuthenticationConfig(
+                authcfg_id, config, True):
             return None
 
         oauth_config = config.configMap().get("oauth2config")

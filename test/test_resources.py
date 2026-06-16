@@ -17,6 +17,7 @@ import unittest
 
 from qgis.PyQt.QtGui import QIcon
 
+
 class ClearlyHubDialogTest(unittest.TestCase):
     """Test resource work."""
 
@@ -33,6 +34,7 @@ class ClearlyHubDialogTest(unittest.TestCase):
         path = os.path.join(os.path.dirname(__file__), os.pardir, 'icon.png')
         icon = QIcon(path)
         self.assertFalse(icon.isNull())
+
 
 if __name__ == "__main__":
     suite = unittest.makeSuite(ClearlyHubDialogTest)

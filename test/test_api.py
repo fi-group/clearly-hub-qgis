@@ -7,7 +7,8 @@ class TestUrlValidation(unittest.TestCase):
     """Unit tests for URL validation helper behavior."""
 
     def test_accepts_wms_service_query(self):
-        self.assertTrue(validate_url("https://example.com/geoserver/ows?service=WMS&request=GetCapabilities"))
+        self.assertTrue(validate_url(
+            "https://example.com/geoserver/ows?service=WMS&request=GetCapabilities"))
 
     def test_accepts_wms_path_endpoint(self):
         self.assertTrue(validate_url("https://example.com/geoserver/wms"))

@@ -53,7 +53,8 @@ class Ui_ClearlyHubDialogBase(object):
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
         self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 522, 426))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
-        self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents)
+        self.verticalLayout_3 = QtWidgets.QVBoxLayout(
+            self.scrollAreaWidgetContents)
         self.verticalLayout_3.setObjectName("verticalLayout_3")
         self.templateFrame = QtWidgets.QFrame(self.scrollAreaWidgetContents)
         self.templateFrame.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -90,15 +91,23 @@ class Ui_ClearlyHubDialogBase(object):
 
     def retranslateUi(self, ClearlyHubDialogBase):
         _translate = QtCore.QCoreApplication.translate
-        ClearlyHubDialogBase.setWindowTitle(_translate("ClearlyHubDialogBase", "Clearly.Hub"))
+        ClearlyHubDialogBase.setWindowTitle(
+            _translate("ClearlyHubDialogBase", "Clearly.Hub"))
         self.hubsButton.setText(_translate("ClearlyHubDialogBase", "Hub"))
         self.appsButton.setText(_translate("ClearlyHubDialogBase", "Apps"))
-        self.searchBox.setPlaceholderText(_translate("ClearlyHubDialogBase", "Search..."))
+        self.searchBox.setPlaceholderText(
+            _translate("ClearlyHubDialogBase", "Search..."))
         self.loginButton.setText(_translate("ClearlyHubDialogBase", "Login"))
-        self.datasetsLabel.setText(_translate("ClearlyHubDialogBase", "Datasets"))
+        self.datasetsLabel.setText(
+            _translate(
+                "ClearlyHubDialogBase",
+                "Datasets"))
         self.iconLabel.setText(_translate("ClearlyHubDialogBase", "[ICON]"))
         self.titleLabel.setText(_translate("ClearlyHubDialogBase", "[TITLE]"))
-        self.descriptionLabel.setText(_translate("ClearlyHubDialogBase", "[DESCRIPTION]"))
+        self.descriptionLabel.setText(
+            _translate(
+                "ClearlyHubDialogBase",
+                "[DESCRIPTION]"))
 
     def set_dataset_info(self):
         """Compatibility hook invoked by setupUi.
@@ -108,5 +117,3 @@ class Ui_ClearlyHubDialogBase(object):
         setupUi can be called safely.
         """
         return
-    
-

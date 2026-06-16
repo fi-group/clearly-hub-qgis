@@ -25,10 +25,12 @@ class NetworkManager:
 
         access_token = None
         if self._auth_cfg:
-            if not self._auth_manager.updateNetworkRequest(request, self._auth_cfg):
+            if not self._auth_manager.updateNetworkRequest(
+                    request, self._auth_cfg):
                 return False, "Failed to apply authentication to request.", None, None
 
-            auth_header = bytes(request.rawHeader(b"Authorization")).decode("utf-8")
+            auth_header = bytes(request.rawHeader(
+                b"Authorization")).decode("utf-8")
             if auth_header.startswith("Bearer "):
                 access_token = auth_header[len("Bearer "):]
 

@@ -45,8 +45,10 @@ class DigitalTwinsTab(QObject):
             "findability": set(),
         }
 
-        self._main_layout = self.tab_widget.findChild(QtWidgets.QVBoxLayout, "digitalTwinsTabLayout")
-        self._search_bar = self.tab_widget.findChild(QtWidgets.QLineEdit, "digitalTwinsSearchLineEdit")
+        self._main_layout = self.tab_widget.findChild(
+            QtWidgets.QVBoxLayout, "digitalTwinsTabLayout")
+        self._search_bar = self.tab_widget.findChild(
+            QtWidgets.QLineEdit, "digitalTwinsSearchLineEdit")
         self._clear_filters_button = self.tab_widget.findChild(
             QtWidgets.QPushButton, "digitalTwinsClearFiltersButton"
         )
@@ -74,9 +76,11 @@ class DigitalTwinsTab(QObject):
         for key, widget in self._filter_lists.items():
             self._init_filter_list(
                 widget,
-                lambda _item, filter_key=key: self._on_filter_changed(filter_key),
+                lambda _item, filter_key=key: self._on_filter_changed(
+                    filter_key),
             )
-            self._init_collapsible_filter(self._filter_toggles.get(key), widget)
+            self._init_collapsible_filter(
+                self._filter_toggles.get(key), widget)
 
         if self._clear_filters_button is not None:
             self._clear_filters_button.setText(self.CLEAR_FILTERS_TEXT)
@@ -109,7 +113,8 @@ class DigitalTwinsTab(QObject):
             )
         )
 
-    def _set_filter_section_expanded(self, toggle_button, body_widget, expanded):
+    def _set_filter_section_expanded(
+            self, toggle_button, body_widget, expanded):
         body_widget.setVisible(expanded)
         toggle_button.setArrowType(ARROW_DOWN if expanded else ARROW_RIGHT)
 
@@ -140,11 +145,19 @@ class DigitalTwinsTab(QObject):
     def _update_pagination_ui(self):
         if self.page_label is None or self.prev_button is None or self.next_button is None:
             return
-        total_pages = max(1, (self.total_count + self.page_size - 1) // self.page_size)
+        total_pages = max(
+            1,
+            (self.total_count +
+             self.page_size -
+             1) //
+            self.page_size)
         max_page = total_pages - 1
         if self.current_page > max_page:
             self.current_page = max_page
-        self.page_label.setText(f"Page {self.current_page + 1} of {total_pages}")
+        self.page_label.setText(
+            f"Page {
+                self.current_page +
+                1} of {total_pages}")
         self.prev_button.setEnabled(self.current_page > 0)
         self.next_button.setEnabled(self.current_page < max_page)
 
@@ -155,7 +168,13 @@ class DigitalTwinsTab(QObject):
         self._refresh_filtered_view()
 
     def _on_next_page(self):
-        max_page = max(0, (self.total_count + self.page_size - 1) // self.page_size - 1)
+        max_page = max(
+            0,
+            (self.total_count +
+             self.page_size -
+             1) //
+            self.page_size -
+            1)
         if self.current_page >= max_page:
             return
         self.current_page += 1
@@ -169,7 +188,8 @@ class DigitalTwinsTab(QObject):
         self._refresh_filtered_view()
 
     def _on_filter_changed(self, filter_key):
-        self._selected_filters[filter_key] = self._checked_values(self._filter_lists.get(filter_key))
+        self._selected_filters[filter_key] = self._checked_values(
+            self._filter_lists.get(filter_key))
         self.current_page = 0
         self._refresh_filtered_view()
 
@@ -220,7 +240,8 @@ class DigitalTwinsTab(QObject):
         return result
 
     def _twin_owner_hubs(self, twin):
-        owner_hub = self._normalize_text(twin.get("owner_hub") or twin.get("title"))
+        owner_hub = self._normalize_text(
+            twin.get("owner_hub") or twin.get("title"))
         return [owner_hub] if owner_hub else []
 
     def _twin_part_of_hubs(self, twin):
@@ -231,17 +252,20 @@ class DigitalTwinsTab(QObject):
         single_value = self._normalize_text(twin.get("part_of_hub"))
         if not single_value:
             return []
-        return self._dedupe_values([part.strip() for part in single_value.split(",")])
+        return self._dedupe_values([part.strip()
+                                   for part in single_value.split(",")])
 
     def _twin_findability_values(self, twin):
         values = twin.get("findability_values")
         if isinstance(values, (list, tuple, set)):
-            return [self._normalize_text(value).upper() for value in values if self._normalize_text(value)]
+            return [self._normalize_text(value).upper(
+            ) for value in values if self._normalize_text(value)]
 
         raw = self._normalize_text(twin.get("findability"))
         if not raw:
             return ["UNKNOWN"]
-        return [self._normalize_text(value).upper() for value in raw.split(",") if self._normalize_text(value)]
+        return [self._normalize_text(value).upper() for value in raw.split(
+            ",") if self._normalize_text(value)]
 
     def _findability_label(self, value):
         raw_value = self._normalize_text(value)
@@ -267,11 +291,13 @@ class DigitalTwinsTab(QObject):
 
         list_widget.blockSignals(True)
         list_widget.clear()
-        for normalized, display in sorted(available.items(), key=lambda item: item[1].lower()):
+        for normalized, display in sorted(
+                available.items(), key=lambda item: item[1].lower()):
             item = QtWidgets.QListWidgetItem(display)
             item.setData(USER_ROLE, normalized)
             item.setFlags(item.flags() | ITEM_IS_USER_CHECKABLE)
-            item.setCheckState(CHECKED_STATE if normalized in preserved else UNCHECKED_STATE)
+            item.setCheckState(
+                CHECKED_STATE if normalized in preserved else UNCHECKED_STATE)
             list_widget.addItem(item)
         list_widget.blockSignals(False)
 
@@ -282,14 +308,18 @@ class DigitalTwinsTab(QObject):
         for twin in self._all_digital_twins:
             for owner_hub in self._twin_owner_hubs(twin):
                 available[self._normalize_key(owner_hub)] = owner_hub
-        self._refresh_list_widget(self._filter_lists.get("owner_hubs"), available, "owner_hubs")
+        self._refresh_list_widget(
+            self._filter_lists.get("owner_hubs"),
+            available,
+            "owner_hubs")
 
     def _refresh_findability_sidebar(self):
         available = {}
         for twin in self._all_digital_twins:
             for value in self._twin_findability_values(twin):
                 available[value] = self._findability_label(value)
-        self._refresh_list_widget(self._filter_lists.get("findability"), available, "findability")
+        self._refresh_list_widget(self._filter_lists.get(
+            "findability"), available, "findability")
 
     def _matches_search(self, twin, query):
         needle = self._normalize_text(query).lower()
@@ -312,7 +342,8 @@ class DigitalTwinsTab(QObject):
         selected = self._selected_filters[filter_key]
         if not selected:
             return True
-        normalized_values = {self._normalize_key(value) for value in values if self._normalize_text(value)}
+        normalized_values = {self._normalize_key(
+            value) for value in values if self._normalize_text(value)}
         return bool(normalized_values & selected)
 
     def _matches_findability_filter(self, twin):
@@ -323,7 +354,8 @@ class DigitalTwinsTab(QObject):
 
     def _matches_filters(self, twin):
         return (
-            self._matches_any_selected(self._twin_owner_hubs(twin), "owner_hubs")
+            self._matches_any_selected(
+                self._twin_owner_hubs(twin), "owner_hubs")
             and self._matches_findability_filter(twin)
         )
 
@@ -337,7 +369,13 @@ class DigitalTwinsTab(QObject):
             if self._matches_search(twin, query) and self._matches_filters(twin)
         ]
         self.total_count = len(filtered)
-        max_page = max(0, (self.total_count + self.page_size - 1) // self.page_size - 1)
+        max_page = max(
+            0,
+            (self.total_count +
+             self.page_size -
+             1) //
+            self.page_size -
+            1)
         if self.current_page > max_page:
             self.current_page = max_page
 
@@ -372,8 +410,10 @@ class DigitalTwinsTab(QObject):
         owner_hub = ", ".join(self._twin_owner_hubs(twin)) or "No Hub"
         part_of_hub = ", ".join(self._twin_part_of_hubs(twin)) or "—"
         findability_values = self._twin_findability_values(twin)
-        findability = ", ".join(self._findability_label(value) for value in findability_values) or "Unknown"
-        profile_picture_url = self._normalize_text(twin.get("profile_picture_url"))
+        findability = ", ".join(self._findability_label(value)
+                                for value in findability_values) or "Unknown"
+        profile_picture_url = self._normalize_text(
+            twin.get("profile_picture_url"))
 
         frame = QFrame()
         frame.setObjectName("digitalTwinCard")
@@ -401,7 +441,8 @@ class DigitalTwinsTab(QObject):
         )
         twin_id = twin.get("id")
         load_button.clicked.connect(
-            lambda checked, dt_id=twin_id: self.digital_twin_load_requested.emit(dt_id)
+            lambda checked, dt_id=twin_id: self.digital_twin_load_requested.emit(
+                dt_id)
         )
 
         info_layout = QVBoxLayout()
@@ -442,7 +483,10 @@ class DigitalTwinsTab(QObject):
 
         error_code = getattr(reply, "error", lambda: None)()
         no_error = getattr(reply, "NetworkError", None)
-        no_error_value = getattr(no_error, "NoError", 0) if no_error is not None else 0
+        no_error_value = getattr(
+            no_error,
+            "NoError",
+            0) if no_error is not None else 0
         if error_code != no_error_value:
             try:
                 preview.setText("Preview unavailable")

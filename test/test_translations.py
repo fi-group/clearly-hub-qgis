@@ -75,7 +75,8 @@ class SafeTranslationsTest(unittest.TestCase):
             QCoreApplication.installTranslator(translator)
 
             expected_message = 'Goeie more'
-            real_message = QCoreApplication.translate('@default', 'Good morning')
+            real_message = QCoreApplication.translate(
+                '@default', 'Good morning')
             self.assertEqual(real_message, expected_message)
         finally:
             if os.path.exists(qm_path):

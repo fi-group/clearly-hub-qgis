@@ -15,7 +15,7 @@ class Client:
 
     def __init__(self, base_url=None, timeout=None):
         """Initialize client with optional base URL and timeout override.
-        
+
         Args:
             base_url: Optional API base URL.
             timeout: Optional request timeout in seconds.
@@ -25,10 +25,10 @@ class Client:
 
     def _headers(self, user_token=None):
         """Build request headers with optional auth.
-        
+
         Args:
             user_token: Optional OAuth access token.
-        
+
         Returns:
             Dict of headers.
         """
@@ -42,15 +42,15 @@ class Client:
 
     def get(self, endpoint, params=None, user_token=None):
         """Perform a GET request.
-        
+
         Args:
             endpoint: API endpoint path (e.g., "/datasets").
             params: Optional query parameters dict.
             user_token: Optional auth token.
-        
+
         Returns:
             Parsed JSON response dict.
-        
+
         Raises:
             APIError if request fails.
         """
@@ -69,15 +69,15 @@ class Client:
 
     def post(self, endpoint, data=None, user_token=None):
         """Perform a POST request.
-        
+
         Args:
             endpoint: API endpoint path.
             data: Optional JSON body dict.
             user_token: Optional auth token.
-        
+
         Returns:
             Parsed JSON response dict.
-        
+
         Raises:
             APIError if request fails.
         """

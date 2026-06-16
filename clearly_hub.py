@@ -35,7 +35,8 @@ import os.path
 class DataFetchTask(QgsTask):
     """Background task that fetches datasets and digital twins off the main thread."""
 
-    data_ready = pyqtSignal(object, list, list)  # user, datasets, digital_twins
+    # user, datasets, digital_twins
+    data_ready = pyqtSignal(object, list, list)
 
     def __init__(self, service, refresh_user=False):
         super().__init__("ClearlyHub: Loading data")
@@ -50,7 +51,8 @@ class DataFetchTask(QgsTask):
             if self.refresh_user and self.service.is_authenticated():
                 self._user = self.service.update_user_info()
             self._datasets = self.service.get_all_datasets()
-            self._digital_twins = self.service.get_public_digital_twins(datasets=self._datasets)
+            self._digital_twins = self.service.get_public_digital_twins(
+                datasets=self._datasets)
             return True
         except Exception as e:
             print(f"[ClearlyHub] Data fetch error: {e}")
@@ -58,7 +60,10 @@ class DataFetchTask(QgsTask):
 
     def finished(self, result):
         if result:
-            self.data_ready.emit(self._user, self._datasets, self._digital_twins)
+            self.data_ready.emit(
+                self._user,
+                self._datasets,
+                self._digital_twins)
 
 
 class DigitalTwinLoadTask(QgsTask):
@@ -121,9 +126,12 @@ class ClearlyHubController:
         self.dialog.logout_requested.connect(self.handle_logout_requested)
 
         # Connect dataset signals
-        self.dialog.datasets_widget.dataset_load_requested.connect(self.handle_dataset_load_requested)
-        self.dialog.datasets_widget.page_changed.connect(self.handle_datasets_page_changed)
-        self.dialog.digital_twin_widget.digital_twin_load_requested.connect(self.handle_digital_twin_load_requested)
+        self.dialog.datasets_widget.dataset_load_requested.connect(
+            self.handle_dataset_load_requested)
+        self.dialog.datasets_widget.page_changed.connect(
+            self.handle_datasets_page_changed)
+        self.dialog.digital_twin_widget.digital_twin_load_requested.connect(
+            self.handle_digital_twin_load_requested)
         self._fetch_task = None
         self._twin_load_task = None
 
@@ -137,7 +145,8 @@ class ClearlyHubController:
         page_size = max(1, int(page_size))
         widget.set_page(page)
 
-        payload = self.service.get_datasets_page(limit=page_size, offset=page * page_size)
+        payload = self.service.get_datasets_page(
+            limit=page_size, offset=page * page_size)
         datasets = payload.get("results", [])
         total_count = payload.get("count", len(datasets))
         self.dialog.render_datasets(datasets, total_count=total_count)
@@ -192,11 +201,13 @@ class ClearlyHubController:
         self.dialog.set_authenticated_user(None)
         self._reload_all_data()
         self.dialog.show_logged_out()
-    
-    def handle_dataset_load_requested(self, dataset_id, resource_url, resource_format, resource_name):
+
+    def handle_dataset_load_requested(
+            self, dataset_id, resource_url, resource_format, resource_name):
         """Handle dataset loading when a resource is selected from the dropdown."""
         try:
-            result = self.service.load_data(dataset_id, resource_url, resource_format, resource_name)
+            result = self.service.load_data(
+                dataset_id, resource_url, resource_format, resource_name)
             if result is None:
                 self.dialog.show_dataset_load_failed(
                     f"Failed to load dataset with ID: {dataset_id}. "
@@ -207,7 +218,8 @@ class ClearlyHubController:
             # QgsProject.instance().addMapLayer(result)
             self.dialog.show_dataset_load_success()
         except Exception as e:
-            self.dialog.show_dataset_load_failed(f"Failed to load dataset: {str(e)}")
+            self.dialog.show_dataset_load_failed(
+                f"Failed to load dataset: {str(e)}")
 
     def handle_digital_twin_load_requested(self, digital_twin_id):
         """Start a background task to load all datasets in a digital twin."""
@@ -244,6 +256,7 @@ class ClearlyHubController:
     def handle_datasets_page_changed(self, page, page_size):
         """Pagination is handled in the datasets tab after full-data load."""
         _ = (page, page_size)
+
 
 class ClearlyHub:
     """QGIS Plugin Implementation."""
@@ -296,16 +309,16 @@ class ClearlyHub:
         return QCoreApplication.translate('Clearly.Hub', message)
 
     def add_action(
-        self,
-        icon_path,
-        text,
-        callback,
-        enabled_flag=True,
-        add_to_menu=True,
-        add_to_toolbar=True,
-        status_tip=None,
-        whats_this=None,
-        parent=None):
+            self,
+            icon_path,
+            text,
+            callback,
+            enabled_flag=True,
+            add_to_menu=True,
+            add_to_toolbar=True,
+            status_tip=None,
+            whats_this=None,
+            parent=None):
         """Add a toolbar icon to the toolbar.
 
         :param icon_path: Path to the icon for this action. Can be a resource
@@ -396,8 +409,9 @@ class ClearlyHub:
         """Run method that performs all the real work"""
 
         # Create the dialog with elements (after translation) and keep reference
-        # Only create GUI ONCE in callback, so that it will only load when the plugin is started
-        if self.first_start == True:
+        # Only create GUI ONCE in callback, so that it will only load when the
+        # plugin is started
+        if self.first_start:
             self.first_start = False
             self.dlg = ClearlyHubDialog()
             self.controller = ClearlyHubController(self.dlg)

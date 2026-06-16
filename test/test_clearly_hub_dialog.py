@@ -45,8 +45,12 @@ class ClearlyHubDialogTest(unittest.TestCase):
         """Clicking login while logged out should emit login_requested only."""
         observed = {"login": 0, "logout": 0}
 
-        self.dialog.login_requested.connect(lambda: observed.__setitem__("login", observed["login"] + 1))
-        self.dialog.logout_requested.connect(lambda: observed.__setitem__("logout", observed["logout"] + 1))
+        self.dialog.login_requested.connect(
+            lambda: observed.__setitem__(
+                "login", observed["login"] + 1))
+        self.dialog.logout_requested.connect(
+            lambda: observed.__setitem__(
+                "logout", observed["logout"] + 1))
 
         self.dialog.loginButton.click()
 
@@ -57,8 +61,12 @@ class ClearlyHubDialogTest(unittest.TestCase):
         """Clicking login while logged in should emit logout_requested only."""
         observed = {"login": 0, "logout": 0}
 
-        self.dialog.login_requested.connect(lambda: observed.__setitem__("login", observed["login"] + 1))
-        self.dialog.logout_requested.connect(lambda: observed.__setitem__("logout", observed["logout"] + 1))
+        self.dialog.login_requested.connect(
+            lambda: observed.__setitem__(
+                "login", observed["login"] + 1))
+        self.dialog.logout_requested.connect(
+            lambda: observed.__setitem__(
+                "logout", observed["logout"] + 1))
 
         self.dialog.current_user = object()
         self.dialog.refresh_auth_button_text()
@@ -68,6 +76,7 @@ class ClearlyHubDialogTest(unittest.TestCase):
 
         self.assertEqual(observed["login"], 0)
         self.assertEqual(observed["logout"], 1)
+
 
 if __name__ == "__main__":
     suite = unittest.makeSuite(ClearlyHubDialogTest)

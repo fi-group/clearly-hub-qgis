@@ -35,7 +35,9 @@ from .frontend.tabs.digital_twins_tab import DigitalTwinsTab
 
 BASE_DIR = os.path.dirname(__file__)
 
-MAIN_FORM, _ = uic.loadUiType(os.path.join(BASE_DIR, 'frontend/ui/main_window.ui'))
+MAIN_FORM, _ = uic.loadUiType(os.path.join(
+    BASE_DIR, 'frontend/ui/main_window.ui'))
+
 
 class ClearlyHubDialog(QtWidgets.QDialog, MAIN_FORM):
     login_requested = pyqtSignal()
@@ -61,8 +63,13 @@ class ClearlyHubDialog(QtWidgets.QDialog, MAIN_FORM):
         self.datasets_widget = DatasetsTab(self.datasetsTab)
         self.digital_twin_widget = DigitalTwinsTab(self.digitalTwinsTab)
 
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.datasetsTab), "Datasets")
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.digitalTwinsTab), "Digital Twins")
+        self.tabWidget.setTabText(
+            self.tabWidget.indexOf(
+                self.datasetsTab), "Datasets")
+        self.tabWidget.setTabText(
+            self.tabWidget.indexOf(
+                self.digitalTwinsTab),
+            "Digital Twins")
 
     def _setup_branding(self):
         self.topBarWidget.setStyleSheet("")
@@ -105,7 +112,6 @@ class ClearlyHubDialog(QtWidgets.QDialog, MAIN_FORM):
     def render_digital_twins(self, digital_twins):
         self.digital_twin_widget.render_digital_twins(digital_twins)
 
-
     def set_authenticated_user(self, user):
         self.current_user = user
         self.datasets_widget.set_authenticated(user is not None)
@@ -117,7 +123,7 @@ class ClearlyHubDialog(QtWidgets.QDialog, MAIN_FORM):
 
     def show_login_failed(self, message="Login failed. Please try again."):
         self._show_warning(message)
-        
+
     def update_user_info(self, user):
         try:
             if user is None:
@@ -139,9 +145,11 @@ class ClearlyHubDialog(QtWidgets.QDialog, MAIN_FORM):
         self._show_warning(message)
 
     def show_digital_twin_load_success(self, loaded_count):
-        self._show_info(f"Digital twin loaded. {loaded_count} datasets were added to the project.")
+        self._show_info(
+            f"Digital twin loaded. {loaded_count} datasets were added to the project.")
 
-    def show_digital_twin_load_failed(self, message="Failed to load digital twin."):
+    def show_digital_twin_load_failed(
+            self, message="Failed to load digital twin."):
         self._show_warning(message)
 
     def refresh_auth_button_text(self):

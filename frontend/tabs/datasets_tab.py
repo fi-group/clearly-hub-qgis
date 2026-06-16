@@ -46,12 +46,15 @@ class DatasetsTab(QObject):
             "formats": set(),
         }
 
-        self._main_layout = self.tab_widget.findChild(QtWidgets.QVBoxLayout, "datasetsTabLayout")
-        self._search_bar = self.tab_widget.findChild(QtWidgets.QLineEdit, "datasetsSearchLineEdit")
+        self._main_layout = self.tab_widget.findChild(
+            QtWidgets.QVBoxLayout, "datasetsTabLayout")
+        self._search_bar = self.tab_widget.findChild(
+            QtWidgets.QLineEdit, "datasetsSearchLineEdit")
         self._clear_filters_button = self.tab_widget.findChild(
             QtWidgets.QPushButton, "datasetsClearFiltersButton"
         )
-        self._cards_container = self.tab_widget.findChild(QtWidgets.QWidget, "datasetsScrollAreaContents")
+        self._cards_container = self.tab_widget.findChild(
+            QtWidgets.QWidget, "datasetsScrollAreaContents")
 
         self._filter_lists = {
             "owner_hubs": self.tab_widget.findChild(
@@ -83,9 +86,11 @@ class DatasetsTab(QObject):
         for key, widget in self._filter_lists.items():
             self._init_filter_list(
                 widget,
-                lambda _item, filter_key=key: self._on_filter_changed(filter_key),
+                lambda _item, filter_key=key: self._on_filter_changed(
+                    filter_key),
             )
-            self._init_collapsible_filter(self._filter_toggles.get(key), widget)
+            self._init_collapsible_filter(
+                self._filter_toggles.get(key), widget)
 
         if self._clear_filters_button is not None:
             self._clear_filters_button.setText(self.CLEAR_FILTERS_TEXT)
@@ -140,7 +145,8 @@ class DatasetsTab(QObject):
             )
         )
 
-    def _set_filter_section_expanded(self, toggle_button, body_widget, expanded):
+    def _set_filter_section_expanded(
+            self, toggle_button, body_widget, expanded):
         body_widget.setVisible(expanded)
         toggle_button.setArrowType(ARROW_DOWN if expanded else ARROW_RIGHT)
 
@@ -176,12 +182,20 @@ class DatasetsTab(QObject):
         if self.page_label is None or self.prev_button is None or self.next_button is None:
             return
 
-        total_pages = max(1, (self.total_count + self.page_size - 1) // self.page_size)
+        total_pages = max(
+            1,
+            (self.total_count +
+             self.page_size -
+             1) //
+            self.page_size)
         max_page = total_pages - 1
         if self.current_page > max_page:
             self.current_page = max_page
 
-        self.page_label.setText(f"Page {self.current_page + 1} of {total_pages}")
+        self.page_label.setText(
+            f"Page {
+                self.current_page +
+                1} of {total_pages}")
         self.prev_button.setEnabled(self.current_page > 0)
         self.next_button.setEnabled(self.current_page < max_page)
 
@@ -192,7 +206,13 @@ class DatasetsTab(QObject):
         self._refresh_filtered_view()
 
     def _on_next_page(self):
-        max_page = max(0, (self.total_count + self.page_size - 1) // self.page_size - 1)
+        max_page = max(
+            0,
+            (self.total_count +
+             self.page_size -
+             1) //
+            self.page_size -
+            1)
         if self.current_page >= max_page:
             return
         self.current_page += 1
@@ -215,7 +235,8 @@ class DatasetsTab(QObject):
         self._refresh_filtered_view()
 
     def _on_filter_changed(self, filter_key):
-        self._selected_filters[filter_key] = self._checked_values(self._filter_lists.get(filter_key))
+        self._selected_filters[filter_key] = self._checked_values(
+            self._filter_lists.get(filter_key))
         self.current_page = 0
         self._refresh_filtered_view()
 
@@ -278,7 +299,8 @@ class DatasetsTab(QObject):
         return []
 
     def _dataset_owner_hubs(self, dataset):
-        owner_hub = self._normalize_text(dataset.get("owner_hub") or dataset.get("hub"))
+        owner_hub = self._normalize_text(
+            dataset.get("owner_hub") or dataset.get("hub"))
         return [owner_hub] if owner_hub else []
 
     def _dataset_tags(self, dataset):
@@ -291,7 +313,8 @@ class DatasetsTab(QObject):
     def _dataset_formats(self, dataset):
         formats = self._multi_value_field(dataset, "formats")
         if formats:
-            return [self._normalize_text(fmt).lower() for fmt in formats if self._normalize_text(fmt)]
+            return [self._normalize_text(fmt).lower()
+                    for fmt in formats if self._normalize_text(fmt)]
 
         collected = []
         primary_format = self._normalize_text(dataset.get("format"))
@@ -306,7 +329,8 @@ class DatasetsTab(QObject):
         return self._dedupe_values(collected)
 
     def _findability_label(self, dataset):
-        return self._findability_label_from_value(self._dataset_findability_value(dataset))
+        return self._findability_label_from_value(
+            self._dataset_findability_value(dataset))
 
     def _findability_label_from_value(self, value):
         raw_value = self._normalize_text(value)
@@ -336,11 +360,13 @@ class DatasetsTab(QObject):
 
         list_widget.blockSignals(True)
         list_widget.clear()
-        for normalized, display in sorted(available.items(), key=lambda item: item[1].lower()):
+        for normalized, display in sorted(
+                available.items(), key=lambda item: item[1].lower()):
             item = QtWidgets.QListWidgetItem(display)
             item.setData(USER_ROLE, normalized)
             item.setFlags(item.flags() | ITEM_IS_USER_CHECKABLE)
-            item.setCheckState(CHECKED_STATE if normalized in preserved else UNCHECKED_STATE)
+            item.setCheckState(
+                CHECKED_STATE if normalized in preserved else UNCHECKED_STATE)
             list_widget.addItem(item)
         list_widget.blockSignals(False)
 
@@ -351,28 +377,37 @@ class DatasetsTab(QObject):
         for dataset in self._all_datasets:
             for owner_hub in self._dataset_owner_hubs(dataset):
                 available[self._normalize_key(owner_hub)] = owner_hub
-        self._refresh_list_widget(self._filter_lists.get("owner_hubs"), available, "owner_hubs")
+        self._refresh_list_widget(
+            self._filter_lists.get("owner_hubs"),
+            available,
+            "owner_hubs")
 
     def _refresh_tags_sidebar(self):
         available = {}
         for dataset in self._all_datasets:
             for tag in self._dataset_tags(dataset):
                 available[self._normalize_key(tag)] = tag
-        self._refresh_list_widget(self._filter_lists.get("tags"), available, "tags")
+        self._refresh_list_widget(
+            self._filter_lists.get("tags"), available, "tags")
 
     def _refresh_findability_sidebar(self):
         available = {}
         for dataset in self._all_datasets:
             normalized = self._dataset_findability_value(dataset)
-            available[normalized] = self._findability_label_from_value(normalized)
-        self._refresh_list_widget(self._filter_lists.get("findability"), available, "findability")
+            available[normalized] = self._findability_label_from_value(
+                normalized)
+        self._refresh_list_widget(self._filter_lists.get(
+            "findability"), available, "findability")
 
     def _refresh_formats_sidebar(self):
         available = {}
         for dataset in self._all_datasets:
             for fmt in self._dataset_formats(dataset):
                 available[self._normalize_key(fmt)] = self._format_display(fmt)
-        self._refresh_list_widget(self._filter_lists.get("formats"), available, "formats")
+        self._refresh_list_widget(
+            self._filter_lists.get("formats"),
+            available,
+            "formats")
 
     def _matches_search(self, dataset, query):
         needle = self._normalize_text(query).lower()
@@ -395,7 +430,8 @@ class DatasetsTab(QObject):
         selected = self._selected_filters[filter_key]
         if not selected:
             return True
-        normalized_values = {self._normalize_key(value) for value in values if self._normalize_text(value)}
+        normalized_values = {self._normalize_key(
+            value) for value in values if self._normalize_text(value)}
         return bool(normalized_values & selected)
 
     def _matches_findability_filter(self, dataset):
@@ -408,7 +444,8 @@ class DatasetsTab(QObject):
 
     def _matches_filters(self, dataset):
         return (
-            self._matches_any_selected(self._dataset_owner_hubs(dataset), "owner_hubs")
+            self._matches_any_selected(
+                self._dataset_owner_hubs(dataset), "owner_hubs")
             and self._matches_any_selected(self._dataset_tags(dataset), "tags")
             and self._matches_findability_filter(dataset)
             and self._matches_any_selected(self._dataset_formats(dataset), "formats")
@@ -425,7 +462,13 @@ class DatasetsTab(QObject):
         ]
 
         self.total_count = len(filtered_datasets)
-        max_page = max(0, (self.total_count + self.page_size - 1) // self.page_size - 1)
+        max_page = max(
+            0,
+            (self.total_count +
+             self.page_size -
+             1) //
+            self.page_size -
+            1)
         if self.current_page > max_page:
             self.current_page = max_page
 
@@ -463,7 +506,8 @@ class DatasetsTab(QObject):
     def _create_dataset_card(self, dataset):
         owner_hub = ", ".join(self._dataset_owner_hubs(dataset)) or "No Hub"
         tags = ", ".join(self._dataset_tags(dataset)) or "—"
-        formats = ", ".join(self._format_display(fmt) for fmt in self._dataset_formats(dataset)) or "Unknown"
+        formats = ", ".join(self._format_display(fmt)
+                            for fmt in self._dataset_formats(dataset)) or "Unknown"
 
         frame = QFrame()
         frame.setObjectName("datasetCard")
@@ -481,7 +525,9 @@ class DatasetsTab(QObject):
         tags_label.setWordWrap(True)
 
         dataset_id = dataset.get("id")
-        valid_resources = [resource for resource in (dataset.get("resources") or []) if resource.get("url")]
+        valid_resources = [
+            resource for resource in (
+                dataset.get("resources") or []) if resource.get("url")]
 
         load_button = QtWidgets.QToolButton()
         load_button.setText(self.LOAD_BUTTON_TEXT)
@@ -497,7 +543,8 @@ class DatasetsTab(QObject):
         if len(valid_resources) > 1:
             load_all_action = menu.addAction("Load All Resources")
             load_all_action.triggered.connect(
-                lambda checked, did=dataset_id, resources=valid_resources: self._load_all_resources(did, resources)
+                lambda checked, did=dataset_id, resources=valid_resources: self._load_all_resources(
+                    did, resources)
             )
             menu.addSeparator()
 
@@ -507,10 +554,17 @@ class DatasetsTab(QObject):
             resource_format = resource.get("format", "")
             fmt_display = resource_format.upper() if resource_format else "Unknown"
             action = menu.addAction(f"{resource_name}  ({fmt_display})")
+
+            def _emit_load_request(
+                    checked=False,
+                    did=dataset_id,
+                    url=resource_url,
+                    fmt=resource_format,
+                    name=resource_name):
+                self.dataset_load_requested.emit(did, url, fmt, name)
+
             action.triggered.connect(
-                lambda checked, did=dataset_id, url=resource_url, fmt=resource_format, name=resource_name: self.dataset_load_requested.emit(
-                    did, url, fmt, name
-                )
+                _emit_load_request
             )
         load_button.setMenu(menu)
         load_button.setEnabled(bool(valid_resources))
@@ -521,7 +575,9 @@ class DatasetsTab(QObject):
         frame_layout.addWidget(tags_label)
         frame_layout.addWidget(formats_label)
         if self._is_authenticated:
-            findability = QLabel(f"Findability: {self._findability_label(dataset)}")
+            findability = QLabel(
+                f"Findability: {
+                    self._findability_label(dataset)}")
             frame_layout.addWidget(findability)
         frame_layout.addWidget(load_button)
         return frame

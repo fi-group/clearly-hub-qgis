@@ -36,7 +36,8 @@ class AuthClient(Client):
             return None
 
         # Use NetworkManager with correct parameters: URL, auth_cfg
-        network_manager = NetworkManager(OAUTH_USERINFO_URL, auth_cfg=authcfg_id)
+        network_manager = NetworkManager(
+            OAUTH_USERINFO_URL, auth_cfg=authcfg_id)
         success, error, payload, token = network_manager.fetch()
 
         if not success or not payload:

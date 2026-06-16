@@ -7,11 +7,11 @@ sanitize, and reshape raw API responses into standardized structures.
 
 def normalize_format(fmt: str, url: str = "") -> str:
     """Normalize dataset format strings and infer from URL if needed.
-    
+
     Args:
         fmt: Format string (e.g., "application/geo+json", "wms").
         url: Optional URL to infer format from if fmt is empty/unknown.
-    
+
     Returns:
         Normalized format identifier (lowercase, aliased).
     """
@@ -42,10 +42,10 @@ def normalize_format(fmt: str, url: str = "") -> str:
 
 def get_primary_resource(dataset: dict):
     """Return the first resource with a URL.
-    
+
     Args:
         dataset: Raw dataset dict from API.
-    
+
     Returns:
         First resource dict with a URL, or first resource if none have URLs, or None.
     """
@@ -60,10 +60,10 @@ def get_primary_resource(dataset: dict):
 
 def dedupe_preserve_order(values):
     """Return non-empty string values without duplicates, preserving order.
-    
+
     Args:
         values: Iterable of values to dedupe.
-    
+
     Returns:
         List of unique, non-empty strings in original order.
     """
@@ -101,7 +101,9 @@ def extract_named_values(value,
     if isinstance(value, (list, tuple, set)):
         collected = []
         for item in value:
-            collected.extend(extract_named_values(item, text_keys, fallback_keys))
+            collected.extend(
+                extract_named_values(
+                    item, text_keys, fallback_keys))
         return dedupe_preserve_order(collected)
     if isinstance(value, dict):
         for key in text_keys:
@@ -119,10 +121,10 @@ def extract_named_values(value,
 
 def extract_hub_names(hub_value):
     """Extract one or more readable hub names from supported hub shapes.
-    
+
     Args:
         hub_value: Hub value (string, dict, or nested collection).
-    
+
     Returns:
         List of hub name strings.
     """
@@ -131,10 +133,10 @@ def extract_hub_names(hub_value):
 
 def extract_part_of_hub_names(dataset):
     """Extract part-of-hub names using common API field variants.
-    
+
     Args:
         dataset: Dataset dict with potential parent-hub fields.
-    
+
     Returns:
         List of parent hub names or empty list.
     """
@@ -181,7 +183,8 @@ def extract_profile_picture_url(dataset):
 
     # Preview from owner hub participants.
     owner_hub = dataset.get("ownerHub") or {}
-    participants = owner_hub.get("participants") if isinstance(owner_hub, dict) else []
+    participants = owner_hub.get(
+        "participants") if isinstance(owner_hub, dict) else []
     for participant in participants or []:
         if not isinstance(participant, dict):
             continue
@@ -194,26 +197,27 @@ def extract_profile_picture_url(dataset):
 
 def extract_tags(tags_value):
     """Extract readable tag values from strings, dicts, and collections.
-    
+
     Args:
         tags_value: Tags as string (comma-separated), dict, or nested collection.
-    
+
     Returns:
         List of tag strings, deduplicated.
     """
     if isinstance(tags_value, str):
         parts = [p.strip() for p in tags_value.split(",")]
         return dedupe_preserve_order(parts)
-    return extract_named_values(tags_value, text_keys=("name", "title", "label", "value", "slug"), fallback_keys=())
+    return extract_named_values(tags_value, text_keys=(
+        "name", "title", "label", "value", "slug"), fallback_keys=())
 
 
 def dataset_formats(dataset, primary_resource=None):
     """Return normalized format identifiers from dataset and resources.
-    
+
     Args:
         dataset: Dataset dict with resources.
         primary_resource: Optional pre-fetched primary resource.
-    
+
     Returns:
         List of normalized format identifiers.
     """
@@ -234,13 +238,13 @@ def dataset_formats(dataset, primary_resource=None):
 
 def build_dataset_info(dataset):
     """Clean dataset information for standardized use.
-    
+
     Transforms raw API dataset into normalized internal format with
     all required fields for UI rendering and layer loading.
-    
+
     Args:
         dataset: Raw dataset dict from API.
-    
+
     Returns:
         Normalized dataset info dict with fields: id, title, description,
         hub, owner_hub, part_of_hub, part_of_hubs, tags, findability,

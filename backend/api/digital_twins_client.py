@@ -23,4 +23,5 @@ class DigitalTwinsClient(Client):
         if offset is not None:
             params["offset"] = offset
 
-        return self.get("/digital-twins", params=params or None, user_token=user_token)
+        return self.get("/digital-twins", params=params or None,
+                        user_token=user_token)
