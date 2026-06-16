@@ -14,7 +14,7 @@ class AuthClient(Client):
 
     def get_authenticated_user(self, interactive=False):
         """Fetch authenticated user info from OAuth userinfo endpoint.
-        
+
         Args:
             interactive: When True, allow OAuth setup to create or activate the
                 login flow. When False, only reuse an already persisted session.

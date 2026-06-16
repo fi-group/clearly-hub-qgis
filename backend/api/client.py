@@ -6,13 +6,13 @@ from ..managers.errors import APIError
 
 class Client:
     """Base HTTP client for API communication.
-    
+
     Handles headers, authentication, timeouts, and error responses.
     """
-    
+
     BASE_URL = "https://hub.clearly.app/api"
     TIMEOUT = 15
-    
+
     def __init__(self, base_url=None, timeout=None):
         """Initialize client with optional base URL and timeout override.
         
@@ -22,7 +22,7 @@ class Client:
         """
         self.base_url = base_url or self.BASE_URL
         self.timeout = timeout or self.TIMEOUT
-    
+
     def _headers(self, user_token=None):
         """Build request headers with optional auth.
         
@@ -39,7 +39,7 @@ class Client:
         if user_token:
             headers["Authorization"] = f"Bearer {user_token}"
         return headers
-    
+
     def get(self, endpoint, params=None, user_token=None):
         """Perform a GET request.
         
@@ -66,7 +66,7 @@ class Client:
             return response.json()
         except requests.RequestException as e:
             raise APIError(f"GET {endpoint} failed: {str(e)}") from e
-    
+
     def post(self, endpoint, data=None, user_token=None):
         """Perform a POST request.
         
