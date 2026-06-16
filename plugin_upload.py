@@ -9,6 +9,9 @@ import sys
 import getpass
 import xmlrpc.client
 from optparse import OptionParser
+from defusedxml.xmlrpc import monkey_patch
+
+monkey_patch()
 
 # Configuration
 PROTOCOL = 'https'

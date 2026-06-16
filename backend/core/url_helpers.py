@@ -1,7 +1,7 @@
 import re
 import requests
 from urllib.parse import parse_qs, urlparse, urlunparse
-from xml.etree import ElementTree as ET
+from defusedxml.ElementTree import fromstring as safe_fromstring
 
 def validate_url(url: str) -> bool:
     if not url:
@@ -46,7 +46,7 @@ def get_wfs_typenames(base_url: str, user_token: str = None):
         if response.status_code != 200:
             print(f"Failed to fetch WFS capabilities. Status: {response.status_code}")
             return []
-        root = ET.fromstring(response.content)
+        root = safe_fromstring(response.content)
         ns = root.tag.split("}")[0].strip("{") if "}" in root.tag else ""
         prefix = f"{{{ns}}}" if ns else ""
         typenames = []
@@ -67,7 +67,7 @@ def get_wms_layers(base_url: str, user_token: str = None):
         if response.status_code != 200:
             print(f"Failed to fetch WMS capabilities. Status: {response.status_code}")
             return []
-        root = ET.fromstring(response.content)
+        root = safe_fromstring(response.content)
         ns = root.tag.split("}")[0].strip("{") if "}" in root.tag else ""
         prefix = f"{{{ns}}}" if ns else ""
         layers = []
