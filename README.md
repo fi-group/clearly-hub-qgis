@@ -22,7 +22,7 @@ The ClearlyHub plugin for QGIS allows users to connect to the Clearly.Hub data c
 
 ## Installation
 
-The plugin will be available at the official QGIS plugin repository! If you still wish to install it via this repository, put these folder in the QGIS plugin folder, usually found in:
+The plugin will be available at the official QGIS plugin repository! If you still wish to install it via this repository, put this folder in the QGIS plugin folder, usually found in:
 ```
 Go to menu Settings -> User profiles -> Open active profile folder
 
