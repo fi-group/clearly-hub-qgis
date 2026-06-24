@@ -12,7 +12,7 @@ version=1.0.3
 author=Future Insight
 email=support@futureinsight.nl
 
-about=Clearly.Hub plugin for QGIS: Seamless connection between Clearly.Hub and QGIS, access to public and protected data, browse through the data catalog and ind datasets and add them to your QGIS project!
+about=The Clearly.HUB QGIS Plugin connects QGIS directly to the Clearly.HUB Open Urban Platform. Browse the data catalog, search for public and authenticated datasets, and add WMS and 3D Tiles layers to your QGIS project in a few clicks.
 
 tracker=https://github.com/fi-group/clearly-hub-qgis/issues
 repository=https://github.com/fi-group/clearly-hub-qgis
@@ -26,9 +26,9 @@ hasProcessingProvider=no
 # changelog=
 
 # Tags are comma separated with spaces allowed
-tags=python
+tags=web services, WMS, 3D Tiles, data catalog, cloud, open data, open urban platform
 
-homepage=https://hub.clearly.app/home
+homepage=https://hub.clearly.app/apps/6a2be250f03efa527b952d7d/details
 category=Plugins
 icon=icon.png
 # experimental flag

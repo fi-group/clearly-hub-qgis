@@ -36,8 +36,12 @@ On a Windows machine:
 
 C:\Users\USER\AppData\Roaming\QGIS\QGIS3\profiles\default\python\plugins
 
+On a macOS machine:
+
+~/Library/Application Support/QGIS/QGIS3/profiles/default/python/plugins
+
 ```
-Supported (tested) operating systems:
+Supported operating systems:
 - Linux
 - Windows
 - MacOS (untested but probably supported)
